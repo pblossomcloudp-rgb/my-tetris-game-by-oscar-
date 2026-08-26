@@ -1,4 +1,4 @@
-const board = document.querySelector(".board");
+const board = document.querySelector("#board");
 const scoreDisplay = document.querySelector("#score");
 const levelDisplay = document.querySelector("#level");
 const pauseButton = document.querySelector("#pauseButton");
