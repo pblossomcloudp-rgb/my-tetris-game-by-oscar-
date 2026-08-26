@@ -2,12 +2,6 @@
 
 * {
     box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-}
-
-html {
-    width: 100%;
-    min-height: 100%;
 }
 
 body {
@@ -22,15 +16,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-
-    overflow-x: hidden;
-    touch-action: manipulation;
 }
 
 .game {
     text-align: center;
-    width: 100%;
-    padding: 20px;
 }
 
 .game-layout {
@@ -80,8 +69,6 @@ body {
         inset 0 0 20px rgba(255, 255, 255, 0.05);
 
     position: relative;
-
-    flex-shrink: 0;
 }
 
 .cell {
@@ -122,6 +109,7 @@ body {
     border-color: #ffc266;
 }
 
+
 .sidebar {
     width: 200px;
     min-height: 600px;
@@ -136,6 +124,7 @@ body {
     flex-direction: column;
     gap: 15px;
 }
+
 
 .panel,
 .panel4,
@@ -194,6 +183,7 @@ body {
     height: 20px;
 }
 
+
 .preview-cell.cyan {
     background: #00d9ff;
     border-color: #75edff;
@@ -218,6 +208,7 @@ body {
     background: #ff8c00;
     border-color: #ffc266;
 }
+
 
 #pauseButton,
 #restartButton,
@@ -249,25 +240,6 @@ body {
     background: #111;
 }
 
-.mobile-controls {
-    display: none;
-}
-
-.mobile-controls button {
-    font-family: "Press Start 2P", monospace;
-    color: white;
-    background: #222;
-    border: 3px solid #555;
-    border-radius: 3px;
-    cursor: pointer;
-    user-select: none;
-    touch-action: manipulation;
-}
-
-.mobile-controls button:active {
-    background: #444;
-    transform: scale(0.95);
-}
 
 .game-over {
     display: none;
@@ -305,6 +277,8 @@ body {
     margin-bottom: 25px;
 }
 
+
+
 .win-screen {
     display: none;
 
@@ -341,180 +315,4 @@ body {
     font-size: 12px;
 
     margin-bottom: 25px;
-}
-
-@media (max-width: 900px) {
-    body {
-        align-items: flex-start;
-    }
-
-    .game {
-        padding: 15px 10px 25px;
-    }
-
-    .logo {
-        width: 220px;
-        max-width: 70vw;
-        margin-bottom: 15px;
-    }
-
-    .game-layout {
-        flex-direction: column;
-        align-items: center;
-        gap: 0;
-    }
-
-    .legend {
-        display: none;
-    }
-
-    .board {
-        width: 300px;
-        height: 600px;
-    }
-
-    .mobile-controls {
-        width: 300px;
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 6px;
-        margin-top: 10px;
-    }
-
-    .mobile-controls button {
-        height: 58px;
-        font-size: 18px;
-    }
-
-    .sidebar {
-        width: 300px;
-        min-height: auto;
-        margin-top: 12px;
-    }
-
-    .panel4 {
-        min-height: 125px;
-    }
-}
-
-@media (min-width: 600px) and (max-width: 900px) {
-    .game {
-        padding-top: 20px;
-    }
-
-    .logo {
-        width: 250px;
-    }
-
-    .board {
-        width: 330px;
-        height: 660px;
-    }
-
-    .mobile-controls {
-        width: 330px;
-    }
-
-    .mobile-controls button {
-        height: 65px;
-        font-size: 20px;
-    }
-
-    .sidebar {
-        width: 330px;
-    }
-}
-
-@media (max-height: 700px) and (max-width: 900px) {
-    .game {
-        padding-top: 5px;
-    }
-
-    .logo {
-        width: 180px;
-        margin-bottom: 5px;
-    }
-
-    .board {
-        width: 250px;
-        height: 500px;
-    }
-
-    .mobile-controls {
-        width: 250px;
-    }
-
-    .mobile-controls button {
-        height: 48px;
-        font-size: 14px;
-    }
-
-    .sidebar {
-        width: 250px;
-    }
-}
-
-@media (max-width: 400px) {
-    .board {
-        width: 280px;
-        height: 560px;
-    }
-
-    .mobile-controls {
-        width: 280px;
-    }
-
-    .mobile-controls button {
-        height: 52px;
-        font-size: 15px;
-    }
-
-    .sidebar {
-        width: 280px;
-    }
-}
-
-@media (max-width: 900px) and (orientation: landscape) {
-    body {
-        align-items: flex-start;
-    }
-
-    .game {
-        padding: 5px;
-    }
-
-    .logo {
-        width: 160px;
-        margin-bottom: 5px;
-    }
-
-    .game-layout {
-        flex-direction: row;
-        align-items: flex-start;
-    }
-
-    .board {
-        width: 225px;
-        height: 450px;
-    }
-
-    .mobile-controls {
-        width: 225px;
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        position: absolute;
-        margin-top: 460px;
-    }
-
-    .mobile-controls button {
-        height: 45px;
-        font-size: 12px;
-    }
-
-    .sidebar {
-        width: 170px;
-        min-height: 450px;
-        margin-left: 5px;
-        margin-top: 0;
-    }
 }
