@@ -1,0 +1,318 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    background: #1c1e20;
+    color: white;
+
+    font-family: "Press Start 2P", monospace;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game {
+    text-align: center;
+}
+
+.game-layout {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 24px;
+}
+
+.logo {
+    width: 250px;
+    height: auto;
+    image-rendering: pixelated;
+    display: block;
+    margin: 0 auto 15px;
+}
+
+.legend {
+    width: 250px;
+    margin-top: 80px;
+    margin-left: -100px;
+    flex-shrink: 0;
+}
+
+.legend img {
+    width: 250px;
+    height: auto;
+    display: block;
+    image-rendering: pixelated;
+}
+
+.board {
+    width: 300px;
+    height: 600px;
+
+    background: #1c1e20;
+
+    border: 5px solid #314455;
+
+    display: grid;
+
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(20, 1fr);
+
+    box-shadow:
+        0 0 15px rgba(0, 0, 0, 0.8),
+        inset 0 0 20px rgba(255, 255, 255, 0.05);
+
+    position: relative;
+}
+
+.cell {
+    border: 1px solid #394653;
+    background: #1c1e20;
+}
+
+.cell.filled {
+    border: 2px solid;
+
+    box-shadow:
+        inset 3px 3px 0 rgba(255, 255, 255, 0.35),
+        inset -3px -3px 0 rgba(0, 0, 0, 0.3);
+}
+
+.cell.cyan {
+    background: #00d9ff;
+    border-color: #75edff;
+}
+
+.cell.yellow {
+    background: #ffe600;
+    border-color: #ffff8a;
+}
+
+.cell.purple {
+    background: #a924f6;
+    border-color: #d621f1;
+}
+
+.cell.green {
+    background: #22c55e;
+    border-color: #7cff9b;
+}
+
+.cell.orange {
+    background: #ff8c00;
+    border-color: #ffc266;
+}
+
+
+.sidebar {
+    width: 200px;
+    min-height: 600px;
+
+    background: #313c5e;
+
+    border: 4px solid #263750;
+
+    padding: 12px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+.panel,
+.panel4,
+.container {
+    width: 100%;
+
+    padding: 15px;
+
+    background: #3a3232;
+
+    border: 3px solid #272121;
+
+    border-radius: 2px;
+
+    box-shadow:
+        inset 2px 2px 0 #514646,
+        inset -2px -2px 0 #292323;
+}
+
+.panel h2,
+.panel4 h2 {
+    font-size: 13px;
+
+    margin-top: 0;
+    margin-bottom: 14px;
+}
+
+.panel p,
+.container p {
+    font-size: 14px;
+}
+
+.next-piece {
+    width: 100%;
+    height: 80px;
+
+    display: grid;
+
+    justify-content: center;
+    align-content: center;
+}
+
+.preview-cell {
+    width: 20px;
+    height: 20px;
+
+    border: 2px solid;
+
+    box-shadow:
+        inset 2px 2px 0 rgba(255, 255, 255, 0.35),
+        inset -2px -2px 0 rgba(0, 0, 0, 0.3);
+}
+
+.preview-empty {
+    width: 20px;
+    height: 20px;
+}
+
+
+.preview-cell.cyan {
+    background: #00d9ff;
+    border-color: #75edff;
+}
+
+.preview-cell.yellow {
+    background: #ffe600;
+    border-color: #ffff8a;
+}
+
+.preview-cell.purple {
+    background: #a924f6;
+    border-color: #d621f1;
+}
+
+.preview-cell.green {
+    background: #22c55e;
+    border-color: #7cff9b;
+}
+
+.preview-cell.orange {
+    background: #ff8c00;
+    border-color: #ffc266;
+}
+
+
+#pauseButton,
+#restartButton,
+#winRestartButton {
+    width: 100%;
+
+    padding: 12px 5px;
+
+    font-family: "Press Start 2P", monospace;
+    font-size: 10px;
+
+    color: white;
+    background: #222;
+
+    border: 3px solid #555;
+
+    cursor: pointer;
+}
+
+#pauseButton:hover,
+#restartButton:hover,
+#winRestartButton:hover {
+    background: #444;
+}
+
+#pauseButton:active,
+#restartButton:active,
+#winRestartButton:active {
+    background: #111;
+}
+
+
+.game-over {
+    display: none;
+
+    position: fixed;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    min-width: 350px;
+
+    background: #222;
+
+    border: 5px solid #555;
+
+    padding: 30px;
+
+    text-align: center;
+
+    z-index: 100;
+}
+
+.game-over h2 {
+    font-size: 20px;
+
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+.game-over p {
+    font-size: 12px;
+
+    margin-bottom: 25px;
+}
+
+
+
+.win-screen {
+    display: none;
+
+    position: fixed;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    min-width: 380px;
+
+    background: #222;
+
+    border: 5px solid #ffe600;
+
+    padding: 30px;
+
+    text-align: center;
+
+    z-index: 100;
+}
+
+.win-screen h2 {
+    font-size: 20px;
+
+    color: #ffe600;
+
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.win-screen p {
+    font-size: 12px;
+
+    margin-bottom: 25px;
+}
