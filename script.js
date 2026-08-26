@@ -10,6 +10,12 @@ const restartButton = document.querySelector("#restartButton");
 const winScreen = document.querySelector("#winScreen");
 const winRestartButton = document.querySelector("#winRestartButton");
 
+const leftButton = document.querySelector("#leftButton");
+const rotateButton = document.querySelector("#rotateButton");
+const rightButton = document.querySelector("#rightButton");
+const downButton = document.querySelector("#downButton");
+const dropButton = document.querySelector("#dropButton");
+
 let gameOver = false;
 let paused = false;
 
@@ -84,24 +90,18 @@ let pieceX = Math.floor(
 let pieceY = 0;
 
 function drawPiece() {
-
     for (let i = 0; i < 200; i++) {
-
         cells[i].className = "cell";
 
         if (locked[i] !== 0) {
-
             cells[i].classList.add("filled");
             cells[i].classList.add(locked[i]);
         }
     }
 
     for (let y = 0; y < piece.shape.length; y++) {
-
         for (let x = 0; x < piece.shape[y].length; x++) {
-
             if (piece.shape[y][x] === 1) {
-
                 const boardX = pieceX + x;
                 const boardY = pieceY + y;
 
@@ -111,7 +111,6 @@ function drawPiece() {
                     boardY >= 0 &&
                     boardY < 20
                 ) {
-
                     const cell =
                         cells[boardY * 10 + boardX];
 
@@ -124,7 +123,6 @@ function drawPiece() {
 }
 
 function drawNextPiece() {
-
     nextPieceDisplay.innerHTML = "";
 
     const shape = nextPiece.shape;
@@ -136,18 +134,13 @@ function drawNextPiece() {
         `repeat(${shape.length}, 20px)`;
 
     for (let y = 0; y < shape.length; y++) {
-
         for (let x = 0; x < shape[y].length; x++) {
-
             const cell = document.createElement("div");
 
             if (shape[y][x] === 1) {
-
                 cell.classList.add("preview-cell");
                 cell.classList.add(nextPiece.color);
-
             } else {
-
                 cell.classList.add("preview-empty");
             }
 
@@ -157,13 +150,9 @@ function drawNextPiece() {
 }
 
 function canMove(dx, dy, shape) {
-
     for (let y = 0; y < shape.length; y++) {
-
         for (let x = 0; x < shape[y].length; x++) {
-
             if (shape[y][x] === 1) {
-
                 const boardX = pieceX + x + dx;
                 const boardY = pieceY + y + dy;
 
@@ -188,32 +177,57 @@ function canMove(dx, dy, shape) {
     return true;
 }
 
-function moveDown() {
+function moveLeft() {
+    if (paused || gameOver) {
+        return;
+    }
 
+    if (canMove(-1, 0, piece.shape)) {
+        pieceX--;
+        drawPiece();
+    }
+}
+
+function moveRight() {
+    if (paused || gameOver) {
+        return;
+    }
+
+    if (canMove(1, 0, piece.shape)) {
+        pieceX++;
+        drawPiece();
+    }
+}
+
+function moveDown() {
     if (paused || gameOver) {
         return;
     }
 
     if (canMove(0, 1, piece.shape)) {
-
         pieceY++;
-
         drawPiece();
-
     } else {
-
         lockPiece();
     }
 }
 
+function hardDrop() {
+    if (paused || gameOver) {
+        return;
+    }
+
+    while (canMove(0, 1, piece.shape)) {
+        pieceY++;
+    }
+
+    lockPiece();
+}
+
 function lockPiece() {
-
     for (let y = 0; y < piece.shape.length; y++) {
-
         for (let x = 0; x < piece.shape[y].length; x++) {
-
             if (piece.shape[y][x] === 1) {
-
                 const boardX = pieceX + x;
                 const boardY = pieceY + y;
 
@@ -223,7 +237,6 @@ function lockPiece() {
                     boardY >= 0 &&
                     boardY < 20
                 ) {
-
                     locked[boardY * 10 + boardX] =
                         piece.color;
                 }
@@ -247,7 +260,6 @@ function lockPiece() {
     pieceY = 0;
 
     if (!canMove(0, 0, piece.shape)) {
-
         gameOver = true;
         paused = true;
 
@@ -261,36 +273,27 @@ function lockPiece() {
 }
 
 function clearLines() {
-
     let linesCleared = 0;
 
     for (let y = 19; y >= 0; y--) {
-
         let full = true;
 
         for (let x = 0; x < 10; x++) {
-
             if (locked[y * 10 + x] === 0) {
-
                 full = false;
-
                 break;
             }
         }
 
         if (full) {
-
             for (let row = y; row > 0; row--) {
-
                 for (let x = 0; x < 10; x++) {
-
                     locked[row * 10 + x] =
                         locked[(row - 1) * 10 + x];
                 }
             }
 
             for (let x = 0; x < 10; x++) {
-
                 locked[x] = 0;
             }
 
@@ -307,7 +310,6 @@ function clearLines() {
     nextlevel();
 
     if (score >= 1000) {
-
         gameOver = true;
         paused = true;
 
@@ -318,6 +320,9 @@ function clearLines() {
 }
 
 function rotatePiece() {
+    if (paused || gameOver) {
+        return;
+    }
 
     const rotated =
         piece.shape[0].map((_, index) =>
@@ -327,57 +332,33 @@ function rotatePiece() {
         );
 
     if (canMove(0, 0, rotated)) {
-
         piece.shape = rotated;
-
         drawPiece();
     }
 }
 
 function nextlevel() {
-
     if (score >= 0 && score < 100) {
-
         level = 1;
-
     } else if (score >= 100 && score < 200) {
-
         level = 2;
-
     } else if (score >= 200 && score < 300) {
-
         level = 3;
-
     } else if (score >= 300 && score < 400) {
-
         level = 4;
-
     } else if (score >= 400 && score < 500) {
-
         level = 5;
-
     } else if (score >= 500 && score < 600) {
-
         level = 6;
-
     } else if (score >= 600 && score < 700) {
-
         level = 7;
-
     } else if (score >= 700 && score < 800) {
-
         level = 8;
-
     } else if (score >= 800 && score < 900) {
-
         level = 9;
-
     } else if (score >= 900 && score < 1000) {
-
         level = 10;
-
     } else {
-
         level = 10;
     }
 
@@ -394,37 +375,25 @@ function nextlevel() {
 let gameLoop;
 
 function restartGameLoop() {
-
     clearInterval(gameLoop);
 
     gameLoop = setInterval(() => {
-
         if (!paused && !gameOver) {
-
             moveDown();
         }
-
     }, dropSpeed);
 }
 
 document.addEventListener("keydown", (event) => {
-
     if (event.key === "Escape") {
-
         if (gameOver) {
             return;
         }
 
         paused = !paused;
 
-        if (paused) {
-
-            pauseButton.textContent = "RESUME";
-
-        } else {
-
-            pauseButton.textContent = "PAUSE";
-        }
+        pauseButton.textContent =
+            paused ? "RESUME" : "PAUSE";
 
         return;
     }
@@ -434,71 +403,77 @@ document.addEventListener("keydown", (event) => {
     }
 
     if (event.key === "ArrowLeft") {
-
-        if (canMove(-1, 0, piece.shape)) {
-
-            pieceX--;
-
-            drawPiece();
-        }
+        event.preventDefault();
+        moveLeft();
     }
 
     if (event.key === "ArrowRight") {
-
-        if (canMove(1, 0, piece.shape)) {
-
-            pieceX++;
-
-            drawPiece();
-        }
+        event.preventDefault();
+        moveRight();
     }
 
     if (event.key === "ArrowDown") {
-
+        event.preventDefault();
         moveDown();
     }
 
-    if (
-        event.key === "Whitespace" ||
-        event.key === "ArrowUp"
-    ) {
-
+    if (event.key === "ArrowUp") {
+        event.preventDefault();
         rotatePiece();
+    }
+
+    if (event.code === "Space") {
+        event.preventDefault();
+        hardDrop();
     }
 });
 
 pauseButton.addEventListener("click", () => {
-
     if (gameOver) {
         return;
     }
 
     paused = !paused;
 
-    if (paused) {
+    pauseButton.textContent =
+        paused ? "RESUME" : "PAUSE";
+});
 
-        pauseButton.textContent = "RESUME";
+leftButton.addEventListener("pointerdown", (event) => {
+    event.preventDefault();
+    moveLeft();
+});
 
-    } else {
+rightButton.addEventListener("pointerdown", (event) => {
+    event.preventDefault();
+    moveRight();
+});
 
-        pauseButton.textContent = "PAUSE";
-    }
+downButton.addEventListener("pointerdown", (event) => {
+    event.preventDefault();
+    moveDown();
+});
+
+rotateButton.addEventListener("pointerdown", (event) => {
+    event.preventDefault();
+    rotatePiece();
+});
+
+dropButton.addEventListener("pointerdown", (event) => {
+    event.preventDefault();
+    hardDrop();
 });
 
 restartButton.addEventListener("click", () => {
-
     restartGame();
 });
 
 winRestartButton.addEventListener("click", () => {
-
     restartGame();
 });
 
 function restartGame() {
-
     for (let i = 0; i < 200; i++) {
-
         locked[i] = 0;
     }
 
